@@ -189,5 +189,16 @@ namespace InventoryManagement.Repository
             Context.ProductStock.Update(stock);
             Context.SaveChanges();
         }
+
+        
+        public async Task<int> GetLastProductStockId()
+        {
+            var lastProductStock = Context.ProductStock
+                                             .OrderByDescending(ps => ps.ProductStockId)
+                                             .FirstOrDefault().ProductStockId;
+
+            return (lastProductStock == null) ? 0 : lastProductStock;
+            
+        }
     }
 }

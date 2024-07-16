@@ -6,7 +6,7 @@
         fullText = ` And ${convertNumber(fraction)} Paisa`;
     }
 
-    return `${convertNumber(value)} Tk${fullText} Only`;
+    return `${convertNumber(value)} Rs${fullText} Only`;
 }
 
 function convertNumber(number) {

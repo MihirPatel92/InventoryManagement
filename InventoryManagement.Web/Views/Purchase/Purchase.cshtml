@@ -1,33 +1,88 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Purchase";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-@section Styles{
+@section Styles {
     <style>
-        table tr td p { margin-bottom: 0; color: #777 }
-       
-        #showAddedCode {display: flex;flex-wrap: wrap; }
-        .code {cursor: pointer}
-        #showAddedCode .code-delete { color: #fff; margin: 5px; cursor: pointer }
-        #btnAddToList{display: block}
+        table tr td p {
+            margin-bottom: 0;
+            color: #777
+        }
 
-        #payment-area li strong { font-size: 17px; }
-        #inputDiscount, #inputPaid, #inputPurchaseDate, #inputMemoNumber { display: inline-block; border-radius: 50px; text-align: right; color: #000; }
-        .list-group-item { padding: .75rem 0; }
-        .has-error { border: 2px solid #ff0000 }
-        .remove { color: #ff0707; cursor: pointer; font-size: 15px; }
-        .stock { padding: .18rem .5rem; }
+        #showAddedCode {
+            display: flex;
+            flex-wrap: wrap;
+        }
 
-        #product-code-body span > i { font-size: .8rem }
-        #vendor-info li { font-size: 17px; line-height: 2.5; }
-        #vendor-info li:first-child { border-top: 0 }
-        #vendor-info li:last-child { border-bottom: 0 }
-        #vendor-info i { color: #8a8383 }
+        .code {
+            cursor: pointer
+        }
+
+        #showAddedCode .code-delete {
+            color: #fff;
+            margin: 5px;
+            cursor: pointer
+        }
+
+        #btnAddToList {
+            display: block
+        }
+
+        #payment-area li strong {
+            font-size: 17px;
+        }
+
+        #inputDiscount, #inputPaid, #inputPurchaseDate, #inputMemoNumber {
+            display: inline-block;
+            border-radius: 50px;
+            text-align: right;
+            color: #000;
+        }
+
+        .list-group-item {
+            padding: .75rem 0;
+        }
+
+        .has-error {
+            border: 2px solid #ff0000
+        }
+
+        .remove {
+            color: #ff0707;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .stock {
+            padding: .18rem .5rem;
+        }
+
+        #product-code-body span > i {
+            font-size: .8rem
+        }
+
+        #vendor-info li {
+            font-size: 17px;
+            line-height: 2.5;
+        }
+
+            #vendor-info li:first-child {
+                border-top: 0
+            }
+
+            #vendor-info li:last-child {
+                border-bottom: 0
+            }
+
+        #vendor-info i {
+            color: #8a8383
+        }
 
         /*phone number error*/
-        #errorMessage { display: none }
+        #errorMessage {
+            display: none
+        }
     </style>
 }
 
@@ -71,12 +126,18 @@
             <div class="form-row">
                 <div class="col-lg-3">
                     <div class="md-form">
+                        <input id="inputStock" class="form-control" type="text" />
+                        <label for="inputStock">Stock</label>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="md-form">
                         <input id="inputWarranty" class="form-control" type="text" />
                         <label for="inputWarranty">Warranty</label>
                     </div>
                 </div>
 
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <div class="md-form">
                         <input id="inputDescription" class="form-control" type="text" />
                         <label for="inputDescription">Description</label>
@@ -88,6 +149,10 @@
                         <label for="inputNote">Note</label>
                     </div>
                 </div>
+            </div>
+            <div class="form-row">
+                <div class="col-lg-9 ">
+                    </div>
                 <div class="col-lg-2 text-right">
                     <div class="md-form pt-1">
                         <button type="submit" class="btn btn-sm btn-blue-grey btn-rounded"><i class="far fa-qrcode pr-2"></i>Add&nbspCode</button>
@@ -180,12 +245,12 @@
                                 <div class="flex-1 ml-3">
                                     <input placeholder="Memo Number" id="inputMemoNumber" type="text" class="form-control text-left" required />
                                 </div>
-                            </li> 
-                            
+                            </li>
+
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <strong>Purchase Note</strong>
                                 <div class="flex-1 ml-3">
-                                    <textarea placeholder="Purchase Note" id="inputPurchaseNote" class="form-control"></textarea> 
+                                    <textarea placeholder="Purchase Note" id="inputPurchaseNote" class="form-control"></textarea>
                                 </div>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -237,7 +302,7 @@
                     check product
                 </button>
                 <button id="btnAddToList" type="button" class="btn btn-rounded btn-success code" title="click to check, double click to cart">
-                   Add Product To List
+                    Add Product To List
                 </button>
             </div>
         </div>
@@ -320,7 +385,7 @@
 
             product.SellingId ? bill.innerHTML = `<strong class="green-text">Bill No: </strong><a target="_blank" href="/Selling/SellingReceipt/${product.SellingId}">#${product.SellingSn}</a>` : bill.innerHTML = '';
             purchase.innerHTML = `<a target="_blank" href="/Purchase/PurchaseReceipt/${product.PurchaseId}">Purchase Details <i class="fal fa-long-arrow-right"></i></a>`;
-            
+
             $("#codeDetailsModal").modal("show");
         }
     </script>

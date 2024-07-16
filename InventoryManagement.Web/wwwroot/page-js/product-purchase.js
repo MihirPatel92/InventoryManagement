@@ -378,6 +378,7 @@ const setProductTempObject = function (element) {
     const Warranty = element.inputWarranty.value;
     const Description = element.inputDescription.value;
     const Note = element.inputNote.value;
+    
 
     if (tempStorage === null) {
         tempStorage = {
@@ -404,6 +405,7 @@ const setProductTempObject = function (element) {
         tempStorage.Warranty = Warranty;
         tempStorage.Description = Description;
         tempStorage.Note = Note;
+       
     }
 
     localStorage.setItem('temp-storage', JSON.stringify(tempStorage));
@@ -452,7 +454,7 @@ formCart.addEventListener('submit', function (form) {
     storage.forEach(product => {
         if (product.ProductId === ProductId) {
             isAdded = true
-            return
+            return;
         }
     })
 
@@ -473,8 +475,19 @@ formCart.addEventListener('submit', function (form) {
 
 //show hide check cart btn
 function btnCheckCodeAndCartDisabled(isChecking) {
-    btnCheckProduct.style.display = isChecking ? "block" : "none";
+    btnCheckProduct.style.display = isChecking ? "none" : "none";
     btnAddToList.style.display = isChecking ? "block" : "block";
+    debugger;
+    const url = '/Product/GetLastProductStockId'
+
+    
+    //clear input value
+    /*clearInput()*/
+
+    axios.get(url).then(res => {
+        inputProductCode.value = res.data + 1;
+    }) 
+    inputProductCode.focus();
 }
 
 //btn check product
@@ -486,6 +499,7 @@ btnCheckProduct.addEventListener('click', function (evt) {
     const ProductId = +selectProductId.value;
     const PurchasePrice = +inputPurchasePrice.value;
     const SellingPrice = +inputSellingPrice.value;
+   ;
 
     if (!ParentId || !ProductId || !PurchasePrice || !SellingPrice) {
         productError.textContent = 'Provide product info!'
@@ -495,8 +509,23 @@ btnCheckProduct.addEventListener('click', function (evt) {
     //set the last value of input
     setProductTempObject(formCart);
 
-    debugger;
-    if (tempStorage.ProductStocks.length >= 0 ) {
+    //const PurchaseStock = inputStock.value;
+    //const ProductCode = inputProductCode.value
+
+    //// Adding multiple ProductStocks
+    //for (let i = 0; i < PurchaseStock; i++) {
+    //    let stock = {
+    //        /*ProductStockId: i + 1,*/
+    //        ProductCode: `${ProductCode}${Int32Array(i + 1).padStart(6, '0')}`,
+    //        ProductId: ProductId.value,
+    //        IsSold: false,
+    //        //Quantity: 1,
+    //        //Location: 'Default Location' // Change as needed
+    //    };
+    //    tempStorage.ProductStocks.push(stock);
+    //}
+    //debugger;
+    if (tempStorage.ProductStocks.length) {
         //start loading spinner
         this.disabled = true;
 
@@ -537,7 +566,21 @@ btnAddToList.addEventListener('click', function (evt) {
 
     //set the last value of input
     setProductTempObject(formCart);
+    const PurchaseStock = inputStock.value;
+    const ProductCode = inputProductCode.value
 
+    // Adding multiple ProductStocks
+    for (let i = 0; i < PurchaseStock; i++) {
+        let stock = {
+            /*ProductStockId: i + 1,*/
+            ProductCode: (parseInt(ProductCode) + parseInt(i)).toString(),
+            ProductId: ProductId,
+            IsSold: false,
+            //Quantity: 1,
+            //Location: 'Default Location' // Change as needed
+        };
+        tempStorage.ProductStocks.push(stock);
+    }
     if (tempStorage.ProductStocks.length) {
         //start loading spinner
         this.disabled = true;

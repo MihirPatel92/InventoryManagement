@@ -228,6 +228,15 @@ namespace InventoryManagement.Web.Controllers
             var data = await _db.ProductLog.FindLogByCodeAsync(code);
             return Json(data);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetLastProductStockId()
+        {
+            var data = await _db.ProductStocks.GetLastProductStockId();
+            return Json(data);
+            
+        }
+
         #endregion
     }
 }

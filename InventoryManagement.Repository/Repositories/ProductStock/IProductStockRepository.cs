@@ -22,6 +22,7 @@ namespace InventoryManagement.Repository
 
         void StockOut(int productStockId);
         void StockIn(int productStockId);
+        Task<int> GetLastProductStockId();
 
     }
 }
